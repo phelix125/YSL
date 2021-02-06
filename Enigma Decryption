@@ -1,0 +1,257 @@
+import java.util.Scanner;
+
+public class Enigmas {
+	public static String placeBoard1 = "";// plug boards
+	public static String placeBoard2 = "";
+	public static String placeBoard3 = "";
+	public static String placeBoard4 = "";
+	public static String placeBoard5 = "";
+	public static String placeBoard6 = "";
+	public static String placeBoard7 = "";
+	public static String placeBoard8 = "";
+	public static String placeBoard9 = "";
+	public static String placeBoard10 = "";
+	public static String rotor1 = "";// main rotors
+	public static String rotor2 = "";
+	public static String rotor3 = "";
+	static int k;
+
+	public static void main(String[] args) {
+		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZA";// alphabet
+		String Reflector = "YRUHQSLDPXNGOKMIEBFZCWVJATY";// reflect
+		Scanner scan = new Scanner(System.in);// scanner
+		String console1 = scan.nextLine();// input 
+		Scanner console = new Scanner(console1);// input scanner
+		String RotorP1 = console.next();// first setting
+		String RotorP2 = console.next();// seccond setting
+		String RotorP3 = console.next();// third setting
+		String RotorS1 = console.next();// first starting p
+		String RotorS2 = console.next();// first+1 starting p
+		String RotorS3 = console.next();// third starting p
+		if (RotorP1.equals("i")) {// this is a really brute force way of just getting the rotor positions
+			rotor1 = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
+		} else if (RotorP1.equals("ii")) {
+			rotor1 = "AJDKSIRUXBLHWTMCQGZNPYFVOE";
+		} else if (RotorP1.equals("iii")) {
+			rotor1 = "BDFHJLCPRTXVZNYEIWGAKMUSQO";
+		} else if (RotorP1.equals("iv")) {
+			rotor1 = "ESOVPZJAYQUIRHXLNFTGKDCMWB";
+		} else if (RotorP1.equals("v")) {
+			rotor1 = "VZBRGITYUPSDNHLXAWMJQOFECK";
+		}
+		if (RotorP2.equals("i")) {
+			rotor2 = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
+		} else if (RotorP2.equals("ii")) {
+			rotor2 = "AJDKSIRUXBLHWTMCQGZNPYFVOE";
+		} else if (RotorP2.equals("iii")) {
+			rotor2 = "BDFHJLCPRTXVZNYEIWGAKMUSQO";
+		} else if (RotorP2.equals("iv")) {
+			rotor2 = "ESOVPZJAYQUIRHXLNFTGKDCMWB";
+		} else if (RotorP2.equals("v")) {
+			rotor2 = "VZBRGITYUPSDNHLXAWMJQOFECK";
+		}
+		if (RotorP3.equals("i")) {
+			rotor3 = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
+		} else if (RotorP3.equals("ii")) {
+			rotor3 = "AJDKSIRUXBLHWTMCQGZNPYFVOE";
+		} else if (RotorP3.equals("iii")) {
+			rotor3 = "BDFHJLCPRTXVZNYEIWGAKMUSQO";
+		} else if (RotorP3.equals("iv")) {
+			rotor3 = "ESOVPZJAYQUIRHXLNFTGKDCMWB";
+		} else if (RotorP3.equals("v")) {
+			rotor3 = "VZBRGITYUPSDNHLXAWMJQOFECK";
+		}
+		int colon = console1.indexOf(":");// finds the index of the colon and uses that to break into the input line
+		String check = console1.substring(colon);
+		Scanner doh = new Scanner(check);// finds the collon and checks for additional plug board settings before it
+		doh.next();// ignore lol
+		if (doh.hasNext()) {// checks for plug board settings
+			String placeboard1 = doh.next();
+			placeBoard1 = placeboard1.substring(0, 1);
+			placeBoard2 = placeboard1.substring(1, 2);
+		}
+		if (doh.hasNext()) {
+			String placeboard2 = doh.next();
+			placeBoard3 = placeboard2.substring(0, 1);
+			placeBoard4 = placeboard2.substring(1, 2);
+		}
+		if (doh.hasNext()) {
+			String placeboard3 = doh.next();
+			placeBoard5 = placeboard3.substring(0, 1);
+			placeBoard6 = placeboard3.substring(1, 2);
+		}
+		if (doh.hasNext()) {
+			String placeboard4 = doh.next();
+			placeBoard7 = placeboard4.substring(0, 1);
+			placeBoard8 = placeboard4.substring(1, 2);
+		}
+		if (doh.hasNext()) {
+			String placeboard5 = doh.next();
+			placeBoard9 = placeboard5.substring(0, 1);
+			placeBoard10 = placeboard5.substring(1, 2);
+		}
+		int lol=0;
+			console.next();// semi colon bruh
+			String input1 = console.nextLine();// full input
+			input1 = input1.toUpperCase();// turns it all into uppercase for the rotors
+			Scanner plzwork= new Scanner(input1);// new scanner for the for loop to take in each indivual word in the line
+			while (plzwork.hasNext()){
+				String input=plzwork.next();
+				
+			int tick = 0;// ticks the rotors// spacing
+			for (int i = 0; i <= input.length() - 1; i++) {
+				lol++;
+				String toplaceBoard = input.substring(i, i + 1);
+				if (placeBoard1.equals(toplaceBoard)) {// place board settings
+					toplaceBoard = placeBoard2;
+				} else if (placeBoard3.equals(toplaceBoard)) {
+					toplaceBoard = placeBoard4;
+				} else if (placeBoard5.equals(toplaceBoard)) {
+					toplaceBoard = placeBoard6;
+				} else if (placeBoard2.equals(toplaceBoard)) {
+					toplaceBoard = placeBoard1;
+				} else if (placeBoard4.equals(toplaceBoard)) {
+					toplaceBoard = placeBoard3;
+				} else if (placeBoard6.equals(toplaceBoard)) {
+					toplaceBoard = placeBoard5;
+				} else if (placeBoard7.equals(toplaceBoard)) {
+					toplaceBoard = placeBoard8;
+				} else if (placeBoard9.equals(toplaceBoard)) {
+					toplaceBoard = placeBoard10;
+				} else if (placeBoard8.equals(toplaceBoard)) {
+					toplaceBoard = placeBoard7;
+				} else if (placeBoard10.equals(toplaceBoard)) {
+					toplaceBoard = placeBoard9;
+				}
+
+				int ChangedRotor3 = alphabet.indexOf(RotorS3);// finds the index of the starting positions
+				int ChangedRotor2 = alphabet.indexOf(RotorS2);//2
+				int ChangedRotor1 = alphabet.indexOf(RotorS1);//3
+
+				int placement = alphabet.indexOf(toplaceBoard);// rotor position effects the outcome
+				/*
+				 * LONG DEFINITION, okay so the first declared before every time the line hits another rotor is the equation adding up to 
+				 * find the letter corresponding to the specific letter, it uses the ticks from each previous letter and the 
+				 * already starting rotor position + the placeboard position which isn't fully implemented.
+				 * everytime the first is greater then 26 it subtracts 26 again since it loops over and the rotors are only 26 chars long.
+				 * the substring in each of these methods is just to get the corresponding char to then be put into the next rotor.
+				 * okay and since if it does subtract we need to keep that value the same, when it subracts I have a value(k) bump up
+				 * and if it is used in the next equation then it adds the 26 again but keeps the initial value the same
+				 */
+				int first=tick + ChangedRotor3 + placement;
+				if (first>=26){
+					first=first%26;
+					k=1;
+				}
+				String intoRotor3 = rotor3.substring(first,first+1);
+				System.out.println("FirstRotor"+intoRotor3);
+				int placement1 = alphabet.indexOf(intoRotor3);
+				if (k==1){
+					placement1=placement1 + 26;
+					k=0;
+				}
+				 first=placement1 + ChangedRotor2 + (26 - ChangedRotor3) - tick;
+				if (first>=26){
+					first=first%26;
+					k=1;
+				}
+				String intoRotor2 = rotor2.substring(first,first+1);
+				System.out.println("SecondRotor"+intoRotor2);
+				int placement2 = alphabet.indexOf(intoRotor2);
+				if (k==1){
+					placement2=placement2 + 26;
+					k=0;
+				}
+				first=placement2 + ChangedRotor1 - ChangedRotor2;
+				if (first>=26){
+					first=first%26;
+					k=1;
+				}
+				String intoRotor1 = rotor1.substring(first,first+1);
+				System.out.println("ThirdRotor"+intoRotor1);
+				int placement3 = alphabet.indexOf(intoRotor1);
+				if (k==1){
+					placement3=placement3 + 26;
+					k=0;
+				}
+				
+				first=placement3 + (26 - ChangedRotor1);
+				if (first>=26){
+					first=first%26;
+					k=1;
+				}
+				String intoReflector = Reflector.substring(first,first+1);
+				System.out.println("Reflector"+intoReflector);
+				int placement4 = alphabet.indexOf(intoReflector);
+				if (k==1){
+					placement4=placement4 + 26;
+					k=0;
+				}
+				first=ChangedRotor1 + placement4;
+				if (first>=26){
+					first=first%26;
+				}
+				String outOfReflector = alphabet.substring(first,first+1);
+				int temp = rotor1.indexOf(outOfReflector);
+				String ofReflection = alphabet.substring(temp, temp + 1);
+				int placement5 = alphabet.indexOf(ofReflection);
+				if (k==1){
+					placement5=placement5 + 26;
+					k=0;
+				}
+				first=placement5 + ChangedRotor2 - ChangedRotor1;
+				if (first>=26){
+					first=first%26;
+					k=1;
+				}
+				String outOfRotor1 = alphabet.substring(first,first+1);
+				int temp2 = rotor2.indexOf(outOfRotor1);
+				String OfRotor1 = alphabet.substring(temp2, temp2 + 1);
+				int placement6 = alphabet.indexOf(OfRotor1);
+				if (k==1){
+					placement6=placement6 + 26;
+					k=0;
+				}
+				first=placement6 + ChangedRotor3 + (26 - ChangedRotor2) + tick;
+				if (first>=26){
+					first=first%26;
+				}
+				String outOfRotor2 = alphabet.substring(first,first+1);
+				int temp3 = rotor3.indexOf(outOfRotor2);
+				first = temp3 + (26 - ChangedRotor3) - tick;
+				if (first>=26){
+					first=first%26;
+				}
+				String OfRotor2 = alphabet.substring(first,first + 1);
+				if (placeBoard2.equals(OfRotor2)) {
+					OfRotor2 = placeBoard1;
+				} else if (placeBoard4.equals(OfRotor2)) {
+					OfRotor2 = placeBoard3;
+				} else if (placeBoard6.equals(OfRotor2)) {
+					OfRotor2 = placeBoard5;
+				} else if (placeBoard1.equals(OfRotor2)) {
+					OfRotor2 = placeBoard2;
+				} else if (placeBoard3.equals(OfRotor2)) {
+					OfRotor2 = placeBoard4;
+				} else if (placeBoard5.equals(OfRotor2)) {
+					OfRotor2 = placeBoard6;
+				} else if (placeBoard7.equals(OfRotor2)) {
+					OfRotor2 = placeBoard8;
+				} else if (placeBoard9.equals(OfRotor2)) {
+					OfRotor2 = placeBoard10;
+				} else if (placeBoard8.equals(OfRotor2)) {
+					OfRotor2 = placeBoard7;
+				} else if (placeBoard10.equals(OfRotor2)) {
+					OfRotor2 = placeBoard9;
+				}
+				System.out.print(OfRotor2);
+				if (lol==4){
+					lol=0;
+					System.out.print(" ");
+				}
+				tick++;
+			}
+		}
+		console.close();
+	}
+}

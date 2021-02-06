@@ -1,0 +1,179 @@
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+public class TTC{
+    // Initial Declaration of all variables
+    // Main ones are player/robot moves and winningnums
+    static int [][] WinningNums = { {1,4,7} , {2,5,8} ,{3,6,9}, {1,2,3}, {4,5,6}, {7,8,9}, {1,5,9}, {3,5,7} };
+    static char [] BOXES ={'1','2','3','4','5','6','7','8','9'};
+    static int[] Player= new int[5];//I guess this is unnecssary since it checks the boxes for the win condition
+    static int[] Robot= new int[5];// this is just a failsafe Ig for ties, I'm pretty sure you can remove
+    static char pAnswer='x';       // All occurences of this array and with a little bug fixing the code would run perfect
+    static int pCount=0;
+    static int rCount=0;
+    static int check1=0;
+
+    public static void main (String arg[]){
+        Scanner input = new Scanner(System.in);
+        //This is the loop for the entire game
+        while(true){
+
+            printBoxes();// Prints out the board
+                System.out.println("Where do you want to place your tally? Enter the number, OR type 'x' to Quit!");
+                pAnswer=input.next().charAt(0);
+                int temp=Character.getNumericValue(pAnswer);
+                if(pAnswer == 'x'){//Quits game
+                    break;
+                }
+                if(BOXES[temp-1] == 'X' || BOXES[temp-1] == '0'){// This checks if X or 0 was taken
+                    System.out.println("You lose for tryna cheat");
+                    System.exit(0);
+                }
+                Player[pCount]=temp;
+                pCount++;
+                BOXES[temp-1] = 'X';
+                AISOLVE();
+                rCount++;
+                
+            
+            Solve();
+
+
+            System.out.println("");
+            System.out.println("");
+            System.out.println("");
+            
+
+
+    }
+
+    }/*SOLVE
+    This function checks both boxes if any of them match the pattern of winning numbers
+    the boxes are exactly 1 lower then the winning numbers
+    so if boxes[0][4][7] were all the char 'x' it would be a winning number
+    boxes is a char array, and it's inital values are to match the numbers on the board
+    converted the boxes[] to X's or 0's is the win condition 
+    
+    */
+    public static void Solve(){
+        for(int i=0; i < WinningNums.length; i++){
+            int temp1=WinningNums[i][0];
+            int temp2=WinningNums[i][1];
+            int temp3=WinningNums[i][2];
+            if(BOXES[temp1-1] == 'X' && BOXES[temp2-1] == 'X' && BOXES[temp3-1] =='X'){
+                printBoxes();
+                System.out.println("YOU WON");
+                System.exit(0);
+            }
+        }for(int i=0; i < WinningNums.length; i++){
+            int temp1=WinningNums[i][0];
+            int temp2=WinningNums[i][1];
+            int temp3=WinningNums[i][2];
+            if(BOXES[temp1-1] == '0' && BOXES[temp2-1] == '0' && BOXES[temp3-1] =='0'){
+
+                printBoxes();
+                System.out.println("YOU LOSER");
+                System.exit(0);
+            }
+        }
+        int ret=0;
+        for(char c: BOXES){
+            if(c == 'X' || c == '0'){
+               ret++;
+            }
+
+        }
+        if(ret  >= 8){// This is the tie meter, after 8 spaces on the board have been taken, it is a tie
+            printBoxes();
+            System.out.println("TIE!");
+            System.exit(0);
+
+        }
+
+
+
+        //This was actually fairly simple to implicate
+        //This function basically uses the win condition code, except it checks for 2 matching boxes and an empty one
+        //It prioritzes winning over letting the player win, so it executes the win side first
+        //
+        
+    }public static void AISOLVE(){
+        int k=Player[0];
+
+        if(check1 == 0 && BOXES[6] != 'X'){// If the player did not pick the middle square, the computer takes it
+            k=5;
+            check1++;
+        }
+        //This is the (WIN) function pretty muching, it checks all the winning numbers
+        //if the boxes match 2/3 numbers and the last one isn't occupied then it'll take that number and win the game
+        for(int i=0; i < WinningNums.length; i++){
+            int temp1=WinningNums[i][0];
+            int temp2=WinningNums[i][1];
+            int temp3=WinningNums[i][2];
+            if(BOXES[temp1-1] == '0' && BOXES[temp2-1] == '0'&& BOXES[temp3-1] != 'X'){
+                k=temp3;
+
+            }if(BOXES[temp3-1] == '0' && BOXES[temp2-1] == '0'&& BOXES[temp1-1] != 'X'){
+                k=temp1;
+  
+            }if(BOXES[temp1-1] == '0' && BOXES[temp3-1] == '0'&& BOXES[temp2-1] != 'X'){
+                k=temp2;
+
+            }
+        }if(k == Player[0]){
+            //This is to protect itself from losing, its the same code as above
+            //But it is reversed, it checks if the player has one move away from winning and prevents it
+        for(int i=0; i < WinningNums.length; i++){
+            int temp1=WinningNums[i][0];
+            int temp2=WinningNums[i][1];
+            int temp3=WinningNums[i][2];
+            if(BOXES[temp1-1] == 'X' && BOXES[temp2-1] == 'X' && BOXES[temp3-1] != '0'){
+                k=temp3;
+
+            }if(BOXES[temp3-1] == 'X' && BOXES[temp2-1] == 'X'&& BOXES[temp1-1] != '0'){
+                k=temp1;
+   
+            }if(BOXES[temp1-1] == 'X' && BOXES[temp3-1] == 'X'&& BOXES[temp2-1] != '0'){
+                k=temp2;
+             
+            }
+        }
+    }
+    //SIDE NOTE MIGHT EVENTUALLY WANT TO MOVE THE ENTIRE AI TO A BINARY TREE
+        Random rand=new Random();// if the next move doesn't make or break the game it picks a random spot, 
+        while(true){
+            if(check(k)){
+                k=rand.nextInt(9)+1;
+            }else{
+                break;
+            }
+        }
+        
+        Robot[rCount]= k ;
+        BOXES[k-1]='0';
+        System.out.println("");
+
+    }public static boolean check(int k){// checks if the spot is taken or not
+        for(int i: Player){
+            if(k == i){
+                return true;
+            }
+        }for(int j: Robot){
+            if(k == j){
+                return true;
+            }
+        }
+        return false;
+
+    }
+    
+    public static void printBoxes(){// prints the boxes
+        System.out.println(" =============");
+        System.out.println("|| "+BOXES[0] + " | " + BOXES[1] + " | " + BOXES[2]+" ||");
+        System.out.println("|| "+BOXES[3] + " | " + BOXES[4] + " | " + BOXES[5]+" ||");
+        System.out.println("|| "+BOXES[6] + " | " + BOXES[7] + " | " + BOXES[8]+" ||");
+        System.out.println(" =============");
+        System.out.println();
+
+    }
+}

@@ -1,0 +1,94 @@
+import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.Random;
+import java.util.Stack;
+
+public class Maze{
+   
+    static int rows=10;
+    static int cols=8;
+    static Coord[][] Maze = new Coord[rows][cols];
+    
+    static Stack<Coord> path = new Stack<Coord>();
+
+    public static void main(String[]args){
+        generateMaze();
+        printMaze();
+        bfsSearch(0,0);
+        for(Coord p : path){
+            System.out.println("x " + p.x + " y " + p.y + " val " + p.val);
+        }
+        System.out.println();
+        printMaze();
+
+    }
+
+    public static void generateMaze(){
+        Random rand = new Random();
+        int k = rand.nextInt(10)+1;
+        for(int i=0; i < rows; i++){
+
+            for(int j=0; j< cols; j++){
+                k=rand.nextInt(10)+1;
+                if(i == rows-1 && j == cols-1)  Maze[i][j] = new Coord(i,j,false,'2'); 
+                else{
+                    if( k > 7){
+                        Maze[i][j] = new Coord(i,j,false,'1');
+                    }else{
+                        Maze[i][j] = new Coord(i,j,false,'0');
+                    }
+                }
+                if(i ==0 && j ==0) Maze[i][j] = new Coord(i,j,false,'0');
+                  
+                
+            }
+        }
+
+    }
+    public static void bfsSearch(int i,int j){
+        if(Maze[i][j].val == 1) return;
+        Coord p = Maze[i][j];
+        path.push(p);
+        Maze[i][j].Visisted = true;
+        
+        if(p.val == '2') return;
+        if(i+1 < rows && Maze[i+1][j].val != '1' && Maze[i+1][j].Visisted == false){
+            Maze[i+1][j].val = '5';
+            System.out.println("DOWN");
+            bfsSearch(i+1,j);
+        }
+        if(i - 1 > 0 && Maze[i-1][j].val != '1' && Maze[i-1][j].Visisted == false){
+            Maze[i-1][j].val = '5';
+            System.out.println("RIGHT");
+            bfsSearch(i-1,j);
+        }
+        if(j + 1 < cols && Maze[i][j+1].val != '1' && Maze[i][j+1].Visisted == false){
+            Maze[i][j+1].val = '5';
+            System.out.println("LEFT");
+            bfsSearch(i,j+1);
+        }
+        if(j - 1 > 0 && Maze[i][j-1].val != '1' && Maze[i][j-1].Visisted == false){
+            Maze[i][j-1].val = '5';
+            System.out.println("UP");
+            bfsSearch(i,j-1);
+        }
+
+       
+        
+       
+
+
+       return;
+        
+    }
+
+    public static void printMaze(){
+        for(int i=0; i < rows; i ++){
+            for(int j=0; j< cols; j++){
+                Coord p = Maze[i][j];
+                System.out.print(p.val);
+            }
+            System.out.println();
+        }
+    }
+}
